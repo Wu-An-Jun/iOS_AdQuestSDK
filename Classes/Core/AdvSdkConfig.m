@@ -16,7 +16,7 @@
 
 NSString *const AdvanceSdkAPIVersion = @"3.0";
 NSString *const AdvanceSdkVersion = @"5.1.4";
-NSString *const AdvanceSdkRequestUrl = @"http://cruiser.bayescom.cn/eleven";
+//NSString *const AdvanceSdkRequestUrl = @"http://cruiser.bayescom.cn/eleven";
 NSString *const SDK_ID_MERCURY = @"1";
 NSString *const SDK_ID_GDT = @"2";
 NSString *const SDK_ID_CSJ = @"3";
@@ -58,6 +58,7 @@ static AdvSdkConfig *instance = nil;
         instance = [[super allocWithZone:NULL] init];
         instance.isAdTrack = YES;
         instance.logEnable = YES;
+        instance.requestUrl = @"http://cruiser.bayescom.cn/eleven"; // 设置默认值
     });
     return instance;
 }

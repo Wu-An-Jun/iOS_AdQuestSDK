@@ -311,7 +311,7 @@
     
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:deviceInfo options:NSJSONWritingPrettyPrinted error:&parseError];
-    NSURL *url = [NSURL URLWithString:AdvanceSdkRequestUrl];
+    NSURL *url = [NSURL URLWithString:[AdvSdkConfig shareInstance].requestUrl];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:5];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     request.HTTPBody = jsonData;

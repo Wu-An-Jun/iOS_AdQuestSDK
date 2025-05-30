@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString *const AdvanceSdkAPIVersion;
 extern NSString *const AdvanceSdkVersion;
-extern NSString *const AdvanceSdkRequestUrl;
+//extern NSString *const AdvanceSdkRequestUrl;
 extern NSString *const SDK_ID_MERCURY;
 extern NSString *const SDK_ID_GDT;
 extern NSString *const SDK_ID_CSJ;
@@ -57,6 +57,8 @@ extern NSString *const AdvanceSDKSecretKey;
 /// 是否允许打印日志，默认为YES
 @property (nonatomic, assign) BOOL logEnable;
 
+/// 可以自定义请求url了
+@property (nonatomic, strong) NSString *requestUrl; // 传url
 @end
 
 NS_ASSUME_NONNULL_END

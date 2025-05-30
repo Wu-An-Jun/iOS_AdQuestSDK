@@ -1,138 +1,82 @@
-#
-#  Be sure to run `pod spec lint iOS_AdQuestSDK.podspec' to ensure this is a
-#  valid spec and to remove all comments including this before submitting the spec.
-#
-#  To learn more about Podspec attributes see https://guides.cocoapods.org/syntax/podspec.html
-#  To see working Podspecs in the CocoaPods repo see https://github.com/CocoaPods/Specs/
-#
+Pod::Spec.new do |s|
 
-Pod::Spec.new do |spec|
+  s.name             = 'iOS_AdQuestSDK'
+  s.version          = '0.0.2'
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.summary          = '广告SDK'
+  s.description      = '一个可以展示不同平台的广告SDK'
 
-  # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  These will help people to find your library, and whilst it
-  #  can feel like a chore to fill in it's definitely to your advantage. The
-  #  summary should be tweet-length, and the description more in depth.
-  #
+  s.homepage         = 'https://github.com/Wu-An-Jun/iOS_AdQuestSDK'
+  s.author           = { 'Lzc' => '2489754250@qq.com' }
+  s.source           = { :git => 'https://github.com/Wu-An-Jun/iOS_AdQuestSDK.git', :tag => s.version.to_s }
 
-  spec.name         = "iOS_AdQuestSDK"
-  spec.version      = "0.0.1"
-  spec.summary      = "A short description of iOS_AdQuestSDK."
+  s.pod_target_xcconfig = { 'VALID_ARCHS' => 'x86_64 armv7 arm64' }
+  s.platform     = :ios, "12.0"
+  s.requires_arc = true
+  s.static_framework = true
 
-  # This description is used to generate tags and improve search results.
-  #   * Think: What does it do? Why did you write it? What is the focus?
-  #   * Try to keep it short, snappy and to the point.
-  #   * Write the description between the DESC delimiters below.
-  #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = <<-DESC
-                   DESC
+  s.resource_bundles = {
+    'iOS_AdQuestSDK' => ['Assets/**/*.*']
+  }
 
-  spec.homepage     = "http://EXAMPLE/iOS_AdQuestSDK"
-  # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  s.default_subspec = 'Core'
 
+  s.subspec 'Core' do |core|
+    core.source_files = 'Classes/Core/**/*.{h,m}'
+    core.frameworks = 'UIKit', 'Foundation', 'AdSupport'
+  end
 
-  # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Licensing your code is important. See https://choosealicense.com for more info.
-  #  CocoaPods will detect a license file if there is a named LICENSE*
-  #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
-  #
+  s.subspec 'AdSpot' do |adSpot|
+    adSpot.dependency 'iOS_AdQuestSDK/Core'
+    adSpot.source_files = 'Classes/AdSpot/**/*.{h,m}'
+  end
 
-  spec.license      = "MIT (example)"
-  # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  s.subspec 'MercuryAdapter' do |mer|
+    mer.dependency 'iOS_AdQuestSDK/AdSpot'
+    mer.dependency 'MercurySDK', '4.4.7'
+    mer.source_files = 'Classes/Adapters/Mercury/**/*.{h,m}'
+    mer.pod_target_xcconfig = {
+      'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES'
+    }
+    mer.user_target_xcconfig = {
+      'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES'
+    }
+  end
 
+  s.subspec 'CSJAdapter' do |csj|
+    csj.dependency 'iOS_AdQuestSDK/AdSpot'
+    csj.dependency 'Ads-CN-Beta/BUAdSDK', '6.8.0.1'
+    csj.source_files = 'Classes/Adapters/CSJ/**/*.{h,m}'
+  end
 
-  # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Specify the authors of the library, with email addresses. Email addresses
-  #  of the authors are extracted from the SCM log. E.g. $ git log. CocoaPods also
-  #  accepts just a name if you'd rather not provide an email address.
-  #
-  #  Specify a social_media_url where others can refer to, for example a twitter
-  #  profile URL.
-  #
+  s.subspec 'GDTAdapter' do |gdt|
+    gdt.dependency 'iOS_AdQuestSDK/AdSpot'
+    gdt.dependency 'GDTMobSDK', '4.15.30'
+    gdt.source_files =  'Classes/Adapters/GDT/**/*.{h,m}'
+  end
 
-  spec.author             = { "Lzc" => "2489754250@qq.com" }
-  # Or just: spec.author    = "Lzc"
-  # spec.authors            = { "Lzc" => "2489754250@qq.com" }
-  # spec.social_media_url   = "https://twitter.com/Lzc"
+  s.subspec 'KSAdapter' do |ks|
+    ks.dependency 'iOS_AdQuestSDK/AdSpot'
+    ks.dependency 'KSAdSDK', '3.3.74'
+    ks.source_files = 'Classes/Adapters/KS/**/*.{h,m}'
+  end
 
-  # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  If this Pod runs only on iOS or OS X, then specify the platform and
-  #  the deployment target. You can optionally include the target after the platform.
-  #
+  s.subspec 'BDAdapter' do |bd|
+    bd.dependency 'iOS_AdQuestSDK/AdSpot'
+    bd.dependency 'BaiduMobAdSDK', '5.373'
+    bd.source_files =  'Classes/Adapters/BD/**/*.{h,m}'
+  end
 
-  # spec.platform     = :ios
-  # spec.platform     = :ios, "5.0"
+  s.subspec 'TanxAdapter' do |tanx|
+    tanx.dependency   'iOS_AdQuestSDK/AdSpot'
+    tanx.dependency 'TanxSDK', '3.7.2'
+    tanx.source_files =  'Classes/Adapters/TANX/**/*.{h,m}'
+  end
 
-  #  When using multiple platforms
-  # spec.ios.deployment_target = "5.0"
-  # spec.osx.deployment_target = "10.7"
-  # spec.watchos.deployment_target = "2.0"
-  # spec.tvos.deployment_target = "9.0"
-  # spec.visionos.deployment_target = "1.0"
-
-
-  # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Specify the location from where the source should be retrieved.
-  #  Supports git, hg, bzr, svn and HTTP.
-  #
-
-  spec.source       = { :git => "http://EXAMPLE/iOS_AdQuestSDK.git", :tag => "#{spec.version}" }
-
-
-  # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  CocoaPods is smart about how it includes source code. For source files
-  #  giving a folder will include any swift, h, m, mm, c & cpp files.
-  #  For header files it will include any header in the folder.
-  #  Not including the public_header_files will make all headers public.
-  #
-
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}"
-  spec.exclude_files = "Classes/Exclude"
-
-  # spec.public_header_files = "Classes/**/*.h"
-
-
-  # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  A list of resources included with the Pod. These are copied into the
-  #  target bundle with a build phase script. Anything else will be cleaned.
-  #  You can preserve files from being cleaned, please don't preserve
-  #  non-essential files like tests, examples and documentation.
-  #
-
-  # spec.resource  = "icon.png"
-  # spec.resources = "Resources/*.png"
-
-  # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
-
-
-  # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Link your library with frameworks, or libraries. Libraries do not include
-  #  the lib prefix of their name.
-  #
-
-  # spec.framework  = "SomeFramework"
-  # spec.frameworks = "SomeFramework", "AnotherFramework"
-
-  # spec.library   = "iconv"
-  # spec.libraries = "iconv", "xml2"
-
-
-  # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  If your library depends on compiler flags you can set them in the xcconfig hash
-  #  where they will only apply to your library. If you depend on other Podspecs
-  #  you can include multiple dependencies to ensure it works.
-
-  # spec.requires_arc = true
-
-  # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # spec.dependency "JSONKit", "~> 1.4"
+  s.subspec 'SigmobAdapter' do |sigmob|
+    sigmob.dependency 'iOS_AdQuestSDK/AdSpot'
+    sigmob.dependency 'SigmobAd-iOS', '4.17.0'
+    sigmob.source_files =  'Classes/Adapters/Sigmob/**/*.{h,m}'
+  end
 
 end
